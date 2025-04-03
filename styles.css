@@ -149,6 +149,9 @@ th {
     color: #ff0000;
     font-weight: bold;
     cursor: pointer;
+    text-align: center; /* Zentriert den Text horizontal */
+    vertical-align: middle; /* Zentriert den Text vertikal */
+    font-size: 1.3rem;
 }
 
 .sum-row {
@@ -157,13 +160,22 @@ th {
 }
 
 .order-now {
-    background-color: #ffb601;
+    background-color: #2b2b2b;
+    color:white ;
     border: none;
-    padding: 10px 20px;
+    padding: 20px 30px;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     border-radius: 5px;
+    position: relative;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+}
+
+.order-now:hover {
+    background-color: #e0a500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .carousel {
@@ -197,8 +209,9 @@ th {
 .carousel-image img {
     width: 120px;
     height: 80px;
-    border: 1px solid #ccc;
+    border: none;
     margin: 0 10px;
+    border-radius: 10px;
 }
 
 .carousel-image p {
@@ -361,8 +374,11 @@ footer {
     }
 
     .carousel-image img {
-        width: 100px;
-        height: 60px;
+        width: 120px;
+        height: 80px;
+        border: none;
+        margin: 0 10px;
+        border-radius: 10px;
     }
 
     .carousel-image p {
