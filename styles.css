@@ -131,7 +131,9 @@ input[readonly] {
 
 .form-container .price {
     grid-column: span 2;
-    font-weight: bold;
+}
+#price-total{
+    font-weight:bold;
 }
 
 .form-container button {
