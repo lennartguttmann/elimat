@@ -7,6 +7,7 @@ body {
     color: #2b2b2b;
     margin: 0;
     padding: 0;
+    background-origin: padding-box;
 }
 
 header {
@@ -32,15 +33,20 @@ nav {
 nav a {
     font-size: 1.5rem;
     font-weight: bold;
-    color:#ffb400;
+    color: #ffb400;
     text-decoration: none;
     padding: 10px 15px;
     margin: 0 10px;
     border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+    border: 2px solid transparent; /* Transparente Border */
 }
 
 nav a:hover {
+    color: #fff;
+    border: 2px solid #ffb601; /* Border-Farbe ändern */
+}
+
+nav a.active {
     color: #fff;
     background-color: #ffb601;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -87,6 +93,40 @@ main {
     border-color: #ffb400; /* Border color when focused */
     color: white; /* Text color when focused */
     outline: none; /* Remove default outline */
+}
+
+input[readonly] {
+    background-color: #ccd0d3; /* Heller Hintergrund für nicht bearbeitbare Felder */
+    cursor: not-allowed; /* Zeigt an, dass das Feld nicht bearbeitet werden kann */
+    color: #6c757d; /* Optional: Textfarbe anpassen */
+}
+
+.dropdown {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    width: 47%; /* Match the input field width */
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
 }
 
 .form-container .price {
@@ -161,7 +201,7 @@ th {
 
 .order-now {
     background-color: #2b2b2b;
-    color:white ;
+    color:#ffd900 ;
     border: none;
     padding: 20px 30px;
     font-size: 14px;
@@ -176,6 +216,7 @@ th {
 .order-now:hover {
     background-color: #e0a500;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color:white;
 }
 
 .carousel {

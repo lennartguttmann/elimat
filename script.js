@@ -23,6 +23,45 @@ function prevSlide() {
 // Initialize the carousel
 showSlide(currentSlide);
 
+// Product data
+const products = {
+    123456: {
+        name: "Laptop XPS 13",
+        brand: "Dell",
+        price: 899.99
+    },
+    1235678: {
+        name: "Keyboard Pro",
+        brand: "Logitech",
+        price: 39.99
+    },
+    139346: {
+        name: "Monitor 27\"",
+        brand: "Samsung",
+        price: 299.99
+    },
+    1234675: {
+        name: "Wireless Mouse Super",
+        brand: "Microsoft",
+        price: 29.99
+    },
+    123786: {
+        name: "Smartphone Galaxy S21",
+        brand: "Samsung",
+        price: 799.99
+    },
+    145657: {
+        name: "Noise Cancelling Headphones",
+        brand: "Sony",
+        price: 199.99
+    },
+    232355: {
+        name: "External SSD 1TB",
+        brand: "SanDisk",
+        price: 149.99
+    }
+};
+
 //From functionality
 
 document.querySelector('.form-container').addEventListener('submit', function (event) {
@@ -121,3 +160,61 @@ window.onclick = function (event) {
         modal.style.display = 'none';
     }
 };
+// Create dorpdown-List 
+document.getElementById('product-id').addEventListener('input', function () {
+    const input = this.value.trim();
+    const dropdown = document.getElementById('product-dropdown');
+
+    // Clear the dropdown
+    dropdown.innerHTML = '';
+
+    // Show dropdown only if input has at least 3 characters
+    if (input.length >= 3) {
+        const matchingProducts = Object.keys(products).filter(productId =>
+            productId.startsWith(input)
+        );
+
+        // Populate the dropdown with matching products
+        matchingProducts.forEach(productId => {
+            const option = document.createElement('div');
+            option.classList.add('dropdown-item');
+            option.textContent = `${productId} - ${products[productId].name}`;
+            option.addEventListener('click', function () {
+                // Fill the input fields with the selected product's data
+                document.getElementById('product-id').value = productId;
+                document.getElementById('product-name').value = products[productId].name;
+                document.getElementById('brand').value = products[productId].brand;
+                dropdown.innerHTML = ''; // Clear the dropdown
+            });
+            dropdown.appendChild(option);
+        });
+
+        // Show the dropdown if there are matching products
+        dropdown.style.display = matchingProducts.length > 0 ? 'block' : 'none';
+    } else {
+        dropdown.style.display = 'none';
+    }
+});
+
+// Hide the dropdown when clicking outside
+document.addEventListener('click', function (event) {
+    const dropdown = document.getElementById('product-dropdown');
+    if (!event.target.closest('#product-id') && !event.target.closest('#product-dropdown')) {
+        dropdown.style.display = 'none';
+    }
+});
+
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function () {
+        // Entferne die aktive Klasse von allen Links
+        document.querySelectorAll('nav a').forEach(navLink => {
+            navLink.classList.remove('active');
+        });
+
+        // Füge die aktive Klasse zum angeklickten Link hinzu
+        this.classList.add('active');
+    });
+});
+
+// Setze die "Order System"-Seite standardmäßig auf aktiv
+document.querySelector('nav a:first-child').classList.add('active');

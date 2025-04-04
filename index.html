@@ -11,9 +11,9 @@
     <header>
         <img src="elimat.jpg" alt="ELIMAT Logo">
         <nav>
-            <a href="#">Order System</a>
+            <a href="#" class="active">Order System</a>
             <a href="#">Contact</a>
-            <a href="#">About Us</a>
+            <a href="https://www.bild.de/">About Us</a>
         </nav>
     </header>
     <main>
@@ -22,10 +22,12 @@
             <div>
                 <label for="product-id">Product ID:*</label>
                 <input type="text" id="product-id" placeholder="Enter Product ID" required>
+                <div id="product-dropdown" class="dropdown"></div>
             </div>
+            
             <div>
                 <label for="product-name">Product Name:</label>
-                <input type="text" id="product-name">
+                <input type="text" id="product-name" readonly>
             </div>
             <div>
                 <label for="brand">Brand:</label>
