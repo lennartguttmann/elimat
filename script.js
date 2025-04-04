@@ -142,24 +142,38 @@ document.querySelector('.order-now').addEventListener('click', function () {
 
     // Handle Yes button
     document.getElementById('confirm-yes').onclick = function () {
-        alert('Your order has been sent successfully!');
+        const modal = document.getElementById('confirmation-modal');
         modal.style.display = 'none';
-        // Add any additional logic for order submission here
+
+        // Show the success modal
+        const successModal = document.getElementById('success-modal');
+        successModal.style.display = 'block';
     };
 
     // Handle No button
     document.getElementById('confirm-no').onclick = function () {
+        const modal = document.getElementById('confirmation-modal');
         modal.style.display = 'none';
     };
 });
 
+// Close the success modal when clicking the OK button
+document.getElementById('success-ok').onclick = function () {
+    const successModal = document.getElementById('success-modal');
+    successModal.style.display = 'none';
+};
+
 // Close the modal when clicking outside of it
 window.onclick = function (event) {
-    const modal = document.getElementById('confirmation-modal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
+    const confirmationModal = document.getElementById('confirmation-modal');
+    const successModal = document.getElementById('success-modal');
+    if (event.target === confirmationModal) {
+        confirmationModal.style.display = 'none';
+    } else if (event.target === successModal) {
+        successModal.style.display = 'none';
     }
 };
+
 // Create dorpdown-List 
 document.getElementById('product-id').addEventListener('input', function () {
     const input = this.value.trim();
@@ -203,6 +217,29 @@ document.addEventListener('click', function (event) {
         dropdown.style.display = 'none';
     }
 });
+
+// Update price fields dynamically
+function updatePriceFields() {
+    const productId = document.getElementById('product-id').value.trim();
+    const quantity = parseInt(document.getElementById('quantity').value.trim(), 10) || 0;
+    const pricePerItemElement = document.querySelector('#price-per-item');
+    const priceTotalElement = document.querySelector('#price-total');
+
+    if (products[productId]) {
+        const pricePerItem = products[productId].price;
+        pricePerItemElement.textContent = `Price per Item: €${pricePerItem.toFixed(2)}`;
+        priceTotalElement.textContent = `Price Total: €${(pricePerItem * quantity).toFixed(2)}`;
+    } else {
+        pricePerItemElement.textContent = 'Price per Item: €0.00';
+        priceTotalElement.textContent = 'Price Total: €0.00';
+    }
+}
+
+// Event listener for product ID input
+document.getElementById('product-id').addEventListener('input', updatePriceFields);
+
+// Event listener for quantity input
+document.getElementById('quantity').addEventListener('input', updatePriceFields);
 
 document.querySelectorAll('nav a').forEach(link => {
     link.addEventListener('click', function () {

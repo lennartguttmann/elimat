@@ -38,8 +38,8 @@
                 <input type="number" id="quantity" required>
             </div>
             <p class="required-text">* All fields are required</p>
-            <div class="price">Price per Item: $29.99</div>
-            <div class="price">Price Total: $119.96</div>
+            <div class="price" id="price-per-item">Price per Item: €0.00</div>
+            <div class="price" id="price-total">Price Total: €0.00</div>
             <button>Add to Order List</button>
         </form>
         <div class="table-button-container">
@@ -139,6 +139,15 @@
                 <div class="modal-buttons">
                     <button id="confirm-yes" class="modal-button">Yes</button>
                     <button id="confirm-no" class="modal-button">No</button>
+                </div>
+            </div>
+        </div>
+        <div id="success-modal" class="modal">
+            <div class="modal-content">
+                <h2>Your Order was sent successfully!</h2>
+                <p>You will receive an e-mail confirmation.</p>
+                <div class="modal-buttons">
+                    <button id="success-ok" class="modal-button">OK</button>
                 </div>
             </div>
         </div>
