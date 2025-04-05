@@ -72,7 +72,9 @@ document.querySelector('.form-container').addEventListener('submit', function (e
     const productName = document.getElementById('product-name').value.trim();
     const brand = document.getElementById('brand').value.trim();
     const quantity = parseInt(document.getElementById('quantity').value.trim(), 10);
-    const pricePerItem = 29.99; // Fixed price per item
+
+    // Dynamically get the price per item from the field
+    const pricePerItem = parseFloat(document.getElementById('price-per-item').textContent.replace('Price per Item: €', '').trim());
 
     // Calculate total price
     const priceTotal = (quantity * pricePerItem).toFixed(2);
@@ -89,7 +91,7 @@ document.querySelector('.form-container').addEventListener('submit', function (e
     <td>${productName}</td>
     <td>${brand}</td>
     <td>${quantity}</td>
-    <td>$${priceTotal}</td>
+    <td>€${priceTotal}</td>
     <td class="delete">X</td>
     `;
 
@@ -113,12 +115,12 @@ function updateSumRow() {
 
     rows.forEach(row => {
         const priceCell = row.querySelector('td:nth-child(5)');
-        const price = parseFloat(priceCell.textContent.replace('$', ''));
+        const price = parseFloat(priceCell.textContent.replace('€', ''));
         totalSum += price;
     });
 
     const sumRow = document.querySelector('.sum-row td:last-child');
-    sumRow.textContent = `$${totalSum.toFixed(2)}`;
+    sumRow.textContent = `€${totalSum.toFixed(2)}`;
 }
 
 // Event delegation for delete functionality

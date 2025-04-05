@@ -1,5 +1,5 @@
 
-- Fix Bug Price Display in table
+- After Add to order List price should be set to default value again
 - After Sucessfull Order Table should be cleaned
 - Contact From Site
 - If no Product ID given show all Brands
