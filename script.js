@@ -196,7 +196,7 @@ document.getElementById('brand').addEventListener('click', function () {
         const selectedOption = document.createElement('div');
         selectedOption.classList.add('dropdown-item');
         selectedOption.textContent = brandInput.value;
-        selectedOption.style.backgroundColor = 'yellow';
+        selectedOption.style.backgroundColor = '#ffb601';
         selectedOption.addEventListener('click', function () {
             // Set the selected brand
             brandInput.value = brandInput.value;
@@ -233,20 +233,124 @@ document.getElementById('brand').addEventListener('click', function () {
     dropdown.style.display = 'block';
 });
 
+// Filter brands dynamically based on input value
+document.getElementById('brand').addEventListener('input', function () {
+    const brandInput = this;
+    const dropdown = document.getElementById('brand-dropdown');
+    const inputValue = brandInput.value.trim().toLowerCase(); // Eingabe in Kleinbuchstaben umwandeln
+
+    // Clear the dropdown
+    dropdown.innerHTML = '';
+
+    // Get all unique brands
+    const uniqueBrands = [...new Set(Object.values(products).map(product => product.brand))];
+
+    // Filter brands based on the input value
+    const matchingBrands = uniqueBrands.filter(brand => brand.toLowerCase().startsWith(inputValue));
+
+    // Populate the dropdown with matching brands
+    matchingBrands.forEach(brand => {
+        const option = document.createElement('div');
+        option.classList.add('dropdown-item');
+        option.textContent = brand;
+        option.addEventListener('click', function () {
+            // Set the selected brand
+            brandInput.value = brand;
+            selectedBrand = brand;
+
+            // Clear the dropdown
+            dropdown.innerHTML = '';
+            dropdown.style.display = 'none';
+        });
+        dropdown.appendChild(option);
+    });
+
+    // Show the dropdown if there are matching brands
+    dropdown.style.display = matchingBrands.length > 0 ? 'block' : 'none';
+});
+
 // Filter product IDs by the selected brand and input value
 document.getElementById('product-id').addEventListener('input', function () {
-    const input = this.value.trim();
+    const productIdInput = this;
+    const productNameInput = document.getElementById('product-name');
+
+    // Clear the product name if the product ID is empty
+    if (productIdInput.value.trim() === '') {
+        productNameInput.value = '';
+    }
+
     const dropdown = document.getElementById('product-dropdown');
 
     // Clear the dropdown
     dropdown.innerHTML = '';
 
-    // Show dropdown only if input has at least 3 characters
-    if (input.length >= 3) {
+    // Check if a brand is selected
+    if (!selectedBrand) {
+        // No brand selected: Show all products matching the input pattern
+        const matchingProducts = Object.keys(products).filter(productId => productId.startsWith(productIdInput.value.trim()));
+
+        // Populate the dropdown with matching products
+        matchingProducts.forEach(productId => {
+            const option = document.createElement('div');
+            option.classList.add('dropdown-item');
+            option.textContent = `${productId} - ${products[productId].name} - ${products[productId].brand}`;
+            option.addEventListener('click', function () {
+                // Fill the input fields with the selected product's data
+                productIdInput.value = productId;
+                productNameInput.value = products[productId].name;
+                document.getElementById('brand').value = products[productId].brand;
+                selectedBrand = products[productId].brand;
+
+                // Clear the dropdown
+                dropdown.innerHTML = '';
+                dropdown.style.display = 'none';
+            });
+            dropdown.appendChild(option);
+        });
+
+        // Show the dropdown if there are matching products
+        dropdown.style.display = matchingProducts.length > 0 ? 'block' : 'none';
+    } else {
+        // A brand is selected: Show products of the selected brand matching the input pattern
         const matchingProducts = Object.keys(products).filter(productId => {
             const product = products[productId];
-            return productId.startsWith(input) && (!selectedBrand || product.brand === selectedBrand);
+            return productId.startsWith(productIdInput.value.trim()) && product.brand === selectedBrand;
         });
+
+        // Populate the dropdown with matching products
+        matchingProducts.forEach(productId => {
+            const option = document.createElement('div');
+            option.classList.add('dropdown-item');
+            option.textContent = `${productId} - ${products[productId].name} - ${products[productId].brand}`;
+            option.addEventListener('click', function () {
+                // Fill the input fields with the selected product's data
+                productIdInput.value = productId;
+                productNameInput.value = products[productId].name;
+                document.getElementById('brand').value = products[productId].brand;
+                selectedBrand = products[productId].brand;
+
+                // Clear the dropdown
+                dropdown.innerHTML = '';
+                dropdown.style.display = 'none';
+            });
+            dropdown.appendChild(option);
+        });
+
+        // Show the dropdown if there are matching products
+        dropdown.style.display = matchingProducts.length > 0 ? 'block' : 'none';
+    }
+});
+
+document.getElementById('product-id').addEventListener('click', function () {
+    const dropdown = document.getElementById('product-dropdown');
+
+    // Clear the dropdown
+    dropdown.innerHTML = '';
+
+    // Check if a brand is selected
+    if (selectedBrand) {
+        // A brand is selected: Show all products of the selected brand
+        const matchingProducts = Object.keys(products).filter(productId => products[productId].brand === selectedBrand);
 
         // Populate the dropdown with matching products
         matchingProducts.forEach(productId => {
@@ -267,10 +371,8 @@ document.getElementById('product-id').addEventListener('input', function () {
             dropdown.appendChild(option);
         });
 
-        // Show the dropdown if there are matching products
+        // Show the dropdown
         dropdown.style.display = matchingProducts.length > 0 ? 'block' : 'none';
-    } else {
-        dropdown.style.display = 'none';
     }
 });
 
