@@ -8,6 +8,9 @@ body {
     margin: 0;
     padding: 0;
     background-origin: padding-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Stellt sicher, dass der Body die gesamte Höhe des Viewports einnimmt */
 }
 
 header {
@@ -54,6 +57,7 @@ nav a.active {
 
 main {
     padding: 20px 30px;
+    flex: 1; /* Nimmt den verfügbaren Platz zwischen Header und Footer ein */
 }
 
 .form-container {
@@ -295,6 +299,8 @@ footer {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+    justify-content: center; /* Zentriert die Links horizontal */
+    position: relative; /* Standardpositionierung */
 }
 
 .footer-links{

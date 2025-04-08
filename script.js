@@ -30,6 +30,11 @@ const products = {
         brand: "Dell",
         price: 899.99
     },
+    323456: {
+        name: "PC MX 188",
+        brand: "Dell",
+        price: 1899.99
+    },
     1235678: {
         name: "Keyboard Pro",
         brand: "Logitech",
@@ -50,15 +55,30 @@ const products = {
         brand: "Samsung",
         price: 799.99
     },
+    114786: {
+        name: "Tablet Duplex S21",
+        brand: "Samsung",
+        price: 999.99
+    },
     145657: {
         name: "Noise Cancelling Headphones",
         brand: "Sony",
         price: 199.99
     },
+    235657: {
+        name: "Television",
+        brand: "Sony",
+        price: 1199.99
+    },
     232355: {
         name: "External SSD 1TB",
         brand: "SanDisk",
         price: 149.99
+    },
+    432355: {
+        name: "External HDD 2TB",
+        brand: "SanDisk",
+        price: 49.99
     }
 };
 
@@ -178,6 +198,14 @@ window.onclick = function (event) {
 
 // Track the selected brand
 let selectedBrand = null;
+
+// Reset selectedBrand when the brand input field is cleared
+document.getElementById('brand').addEventListener('input', function () {
+    const brandInput = this;
+    if (brandInput.value.trim() === '') {
+        selectedBrand = null; // Reset the selected brand
+    }
+});
 
 // Show all brands in the dropdown when the brand input field is clicked
 document.getElementById('brand').addEventListener('click', function () {
