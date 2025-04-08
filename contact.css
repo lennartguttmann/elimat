@@ -2,8 +2,9 @@
     color: #2b2b2b;
     background-color: #edd48d;
     border: 1px solid #edd48d;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 20px 30px; /* Fügt gleichen Abstand oben/unten (20px) und links/rechts (30px) hinzu */
+    margin: 20px auto; /* Zentriert das Formular horizontal */
+    width: 66.67%; /* Setzt die Breite auf 2/3 des Viewports */
     display: flex; /* Ändert das Layout auf Flexbox */
     flex-direction: column; /* Ordnet die Elemente vertikal an */
     gap: 15px; /* Fügt Abstand zwischen den Elementen hinzu */
@@ -23,7 +24,7 @@
 
 .form-container input,
 .form-container textarea {
-    width: 100%; /* Nimmt die gesamte Breite des Containers ein */
+    width: calc(100% - 60px); /* Reduziert die Breite um das Padding des Formulars (30px links + 30px rechts) */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;

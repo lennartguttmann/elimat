@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 
 /* Base styles */
 body {
-    font-family: 'Bebas Neue', Helvetica, sans-serif;
+    font-family: 'Roboto Mono', Helvetica, sans-serif;
     background-color: #f5f5f5;
     color: #2b2b2b;
     margin: 0;
