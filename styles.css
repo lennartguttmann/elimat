@@ -114,7 +114,6 @@ input[readonly] {
     width: 47%; /* Match the input field width */
 }
 
-
 .dropdown-item {
     padding: 10px;
     cursor: pointer;
@@ -129,6 +128,7 @@ input[readonly] {
 .dropdown-item:hover {
     background-color: #f5f5f5;
 }
+
 
 .form-container .price {
     grid-column: span 2;

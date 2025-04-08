@@ -188,30 +188,49 @@ document.getElementById('brand').addEventListener('click', function () {
     // Clear the dropdown
     dropdown.innerHTML = '';
 
-    // If the product ID field is empty, show all brands
-    if (!productIdInput.value.trim()) {
-        const uniqueBrands = [...new Set(Object.values(products).map(product => product.brand))];
+    // Get all unique brands
+    const uniqueBrands = [...new Set(Object.values(products).map(product => product.brand))];
 
-        // Populate the dropdown with all unique brands
-        uniqueBrands.forEach(brand => {
-            const option = document.createElement('div');
-            option.classList.add('dropdown-item');
-            option.textContent = brand;
-            option.addEventListener('click', function () {
-                // Set the selected brand
-                brandInput.value = brand;
-                selectedBrand = brand;
+    // If a brand is already selected, add it as the first item with a yellow background
+    if (brandInput.value.trim()) {
+        const selectedOption = document.createElement('div');
+        selectedOption.classList.add('dropdown-item');
+        selectedOption.textContent = brandInput.value;
+        selectedOption.style.backgroundColor = 'yellow';
+        selectedOption.addEventListener('click', function () {
+            // Set the selected brand
+            brandInput.value = brandInput.value;
+            selectedBrand = brandInput.value;
 
-                // Clear the dropdown
-                dropdown.innerHTML = '';
-                dropdown.style.display = 'none';
-            });
-            dropdown.appendChild(option);
+            // Clear the dropdown
+            dropdown.innerHTML = '';
+            dropdown.style.display = 'none';
         });
-
-        // Show the dropdown
-        dropdown.style.display = 'block';
+        dropdown.appendChild(selectedOption);
     }
+
+    // Populate the dropdown with all unique brands
+    uniqueBrands.forEach(brand => {
+        // Skip the already selected brand to avoid duplication
+        if (brand === brandInput.value.trim()) return;
+
+        const option = document.createElement('div');
+        option.classList.add('dropdown-item');
+        option.textContent = brand;
+        option.addEventListener('click', function () {
+            // Set the selected brand
+            brandInput.value = brand;
+            selectedBrand = brand;
+
+            // Clear the dropdown
+            dropdown.innerHTML = '';
+            dropdown.style.display = 'none';
+        });
+        dropdown.appendChild(option);
+    });
+
+    // Show the dropdown
+    dropdown.style.display = 'block';
 });
 
 // Filter product IDs by the selected brand and input value
