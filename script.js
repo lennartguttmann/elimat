@@ -176,7 +176,45 @@ window.onclick = function (event) {
     }
 };
 
-// Create dorpdown-List 
+// Track the selected brand
+let selectedBrand = null;
+
+// Show all brands in the dropdown when the brand input field is clicked
+document.getElementById('brand').addEventListener('click', function () {
+    const productIdInput = document.getElementById('product-id');
+    const brandInput = this;
+    const dropdown = document.getElementById('brand-dropdown');
+
+    // Clear the dropdown
+    dropdown.innerHTML = '';
+
+    // If the product ID field is empty, show all brands
+    if (!productIdInput.value.trim()) {
+        const uniqueBrands = [...new Set(Object.values(products).map(product => product.brand))];
+
+        // Populate the dropdown with all unique brands
+        uniqueBrands.forEach(brand => {
+            const option = document.createElement('div');
+            option.classList.add('dropdown-item');
+            option.textContent = brand;
+            option.addEventListener('click', function () {
+                // Set the selected brand
+                brandInput.value = brand;
+                selectedBrand = brand;
+
+                // Clear the dropdown
+                dropdown.innerHTML = '';
+                dropdown.style.display = 'none';
+            });
+            dropdown.appendChild(option);
+        });
+
+        // Show the dropdown
+        dropdown.style.display = 'block';
+    }
+});
+
+// Filter product IDs by the selected brand and input value
 document.getElementById('product-id').addEventListener('input', function () {
     const input = this.value.trim();
     const dropdown = document.getElementById('product-dropdown');
@@ -186,21 +224,26 @@ document.getElementById('product-id').addEventListener('input', function () {
 
     // Show dropdown only if input has at least 3 characters
     if (input.length >= 3) {
-        const matchingProducts = Object.keys(products).filter(productId =>
-            productId.startsWith(input)
-        );
+        const matchingProducts = Object.keys(products).filter(productId => {
+            const product = products[productId];
+            return productId.startsWith(input) && (!selectedBrand || product.brand === selectedBrand);
+        });
 
         // Populate the dropdown with matching products
         matchingProducts.forEach(productId => {
             const option = document.createElement('div');
             option.classList.add('dropdown-item');
-            option.textContent = `${productId} - ${products[productId].name}`;
+            option.textContent = `${productId} - ${products[productId].name} - ${products[productId].brand}`;
             option.addEventListener('click', function () {
                 // Fill the input fields with the selected product's data
                 document.getElementById('product-id').value = productId;
                 document.getElementById('product-name').value = products[productId].name;
                 document.getElementById('brand').value = products[productId].brand;
-                dropdown.innerHTML = ''; // Clear the dropdown
+                selectedBrand = products[productId].brand;
+
+                // Clear the dropdown
+                dropdown.innerHTML = '';
+                dropdown.style.display = 'none';
             });
             dropdown.appendChild(option);
         });
@@ -212,10 +255,16 @@ document.getElementById('product-id').addEventListener('input', function () {
     }
 });
 
-// Hide the dropdown when clicking outside
+// Hide the dropdowns when clicking outside
 document.addEventListener('click', function (event) {
     const dropdown = document.getElementById('product-dropdown');
-    if (!event.target.closest('#product-id') && !event.target.closest('#product-dropdown')) {
+    if (!event.target.closest('#product-id') && !event.target.closest('#product-dropdown') && !event.target.closest('#brand')) {
+        dropdown.style.display = 'none';
+    }
+});
+document.addEventListener('click', function (event) {
+    const dropdown = document.getElementById('brand-dropdown');
+    if (!event.target.closest('#brand-id') && !event.target.closest('#brand-dropdown') && !event.target.closest('#brand')) {
         dropdown.style.display = 'none';
     }
 });

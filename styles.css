@@ -114,6 +114,7 @@ input[readonly] {
     width: 47%; /* Match the input field width */
 }
 
+
 .dropdown-item {
     padding: 10px;
     cursor: pointer;
